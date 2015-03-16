@@ -1,0 +1,76 @@
+- Install rvm, ruby, git, heroku
+- create a gemset: rvm --create <version-rails>@<key>
+
+-Create rails app:
++ mkdir <directory-name>
++ cd <directory-name>
++ rails new <rails-app>
++ cd <rails-app>
+
+Directory map:
++app/
++config/
++db/
++doc/
++lib/
+...
+- install budle:
++ sudo apt-get install libxslt-dev libxml2-dev
++ bundle install
+- run local server:
++ rails server: localhost:3000/
+- MVC(model,view,control):
+View<----> controller<----->models<--->database
+	     |
+	     |
+	   browser
+
+GIT:
+- git config --global user.name "Your Name"
+- git config --global user.email youremail@example.com
+- set the editor Git will use for commit message:
++ git config --global core.editor "gvim -f" #(install gVim)
+
+- git init
+- git add
+- git status
+- git commit -m "message" ## if not have -m flag-> open commit whith editor
+- git log
+- git checkout -f ## -f flag to force overwriting the current changes
+==============================
+git hub:
+-git remote add origin git@github.com:<username>/<repo>.git
+-git push origin master/git push
+-git checkout -b <new branch>
+-git branch
+-git mv <source> <destination> ex:git mv README README.markdown
+- mate <file name> ex: mate README.markdown ##open file
+- git checkout <branch>
+- git merge <branch>
+- git branch -d <branch to delete>
+
+#set ssh key:
+- check existing ssh key in folder .ssh: 
++ ls -al ~/.ssh
+- generate ssh new ssh key: 
++ ssh-keygen -t rsa -C "your_email@example.com" ##rsa is key name
+(generate  ~/.ssh/id_rsa.pub)
+- add to the ssh-agent:
++ eval "$(ssh-agent -s
++ ssh-add ~/.ssh/id_rsa ##rsa is key name
+-Add your SSH key to your account: setting->add ssh key -> ...
+-Test your connection:
++ ssh -T git@github.com
+
+===========================
+heroku is a platform to deploy rails app
+
+install:
+- wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh / [sudo] gem install heroku
+-add shh key via git: heroku keys:add
+- heroku login
+- heroku create
+- git push heroku master
+error: Failed to install gems via Bundler, sqllite3 not support!
+
+
