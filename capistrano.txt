@@ -1,0 +1,56 @@
+capistranorb
+1. Install:
+- install via gem: $ gem install capistrano
+- install on rails app via gemfile: gem 'capistrano-rails'/require 'capistrano/rails', '~> 1.1.1'; ->$bundle install
+
+2. deploy_to ... : ex: set :deploy_to, '/var/www/my_app_name' in deploy.rb
+- structure:
++ \current: is a symlink pointing to the latest release.
++ \releases: holds all deployments in a timestamped folder. These folders are the target of the current symlink.
++ \repo:  holds the version control system configured. In case of a git repository the content will be a raw git repository
++ \revisions.log: is used to log every deploy or rollback
++ \shared: contains the linked_files and linked_dirs which are symlinked into each release
+
+3. configuration
+-global:
+/config/deploy.rb
+-stage specific:
+/config/deploy/<stage_name>.rb
+
+in deploy.rb:
+- set :application, 'MyLittleApplication': set aplication name
+- :deploy_to (default: -> { "/var/www/#{fetch(:application)}" }): path deploy to
+- :scm (default: :git): source control manager
+- :repo_path (default: -> { "#{fetch(:deploy_to)}/repo" }): The path on the remote server where the repository should be placed.
+- :repo_tree(default: None): he subtree of the repository to deploy
+- :linked_files(default: []): listed files will be symlinked into each release directory during deployment
+- :linked_dirs(default: []): Listed directories will be symlinked into the release directory during deployment
+- :default_env(default: {}): Default shell environment used during command execution
+- :branch(default: master)
+- :tmp_dir(default: '/tmp'): Temporary directory used during deployments to store data
+- :local_user(default: -> { Etc.getlogin }): Username of the local machine used to update the revision log.
+- :pty(default: false): Used in SSHKit
+- :log_level(default: :debug): Used in SSHKit
+- :format(default: :pretty): Used in SSHKit
+
+4.Preparing for application
+- The original database.yml should be added to the .gitignore (or your SCM's parallel concept of ignored files):
+$ cp config/database.yml{,.example}
+$ echo config/database.yml >> .gitignore
+- Initialize Capistrano:
+$ cd my-project
+$ cap install
+-> create a bunch of files:
+Capfile
+config
+	-deploy
+		-production.rb
+		-staging.rb
+	-deploy.rb
+lib
+	-lib
+		-capistrano
+			-tasks
+
+configure vhost:
+http://httpd.apache.org/docs/2.2/vhosts/examples.html
