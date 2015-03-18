@@ -54,9 +54,3 @@ lib
 
 configure vhost:
 http://httpd.apache.org/docs/2.2/vhosts/examples.html
-book:
-http://it-ebooks.info/book/162/
-http://it-ebooks.info/book/872/
-http://it-ebooks.info/book/374/
-http://it-ebooks.info/book/3130/
-http://it-ebooks.info/book/4857/
