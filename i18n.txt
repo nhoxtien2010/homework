@@ -71,3 +71,16 @@ Organization of Locale Files:
 |---navigation
 |-----es.rb
 |-----en.rb
+
+=======================================================
+I18n js
+The asset pipeline provides a framework to concatenate and minify or compress JavaScript and CSS assets.
+Install : Gemfile: gem "i18n-js", ">= 3.0.0.rc8" 
+Get translations.js:
+
+- add " config.middleware.use I18n::JS::Middleware" to your config/application.rb
+
+- move the middleware line to your config/environments/development.rb file and run rake i18n:js:export before deploying. 
+
+Export Configuration (For translations):
+$ rails generate i18n:js:config # to create config/i18n-js.yml
