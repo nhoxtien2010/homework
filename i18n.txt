@@ -1,0 +1,73 @@
+i18n:
+impotant methods:
+- translate (t): look up text translations
+- localize (l): Localize Date and Time objects to local formats
+attribute:
+- load_path         # Announce your custom translation files
+- locale            # Get and set the current locale
+- default_locale    # Get and set the default locale
+- exception_handler # Use a different exception_handler
+- backend           # Use a different backend
+
+config in .yml and .rb file, default in config/locales directory:
+ex : 
+en:
+  hello: "Hello world"# en: english, cs, :th or :es (for 
+  #Czech, Thai and Spanish).
+
+Custom I18n Configuration Setup in application.rb. ex:
+	# in config/initializers/locale.rb
+	 
+	# tell the I18n library where to find your translations
+	I18n.load_path += Dir[Rails.root.join('lib', 'locale', '*.{rb,yml}')]
+	 
+	# set default locale to something other than :en
+	I18n.default_locale = :pt
+Setting and Passing the Lacale by before_action in ApplicationController: 
+	before_action :set_locale
+	 
+	def set_locale
+	  I18n.locale = params[:locale] || I18n.default_locale
+	end
+The params :locale in URL request : ex : http://example.com/books?locale=pt
+
+Setting I18n from the Domain Name:
+	www.example.com -> english
+	www.example.es -> spanish
+	...
+
+
+	before_action :set_locale
+	 
+	def set_locale
+	  I18n.locale = extract_locale_from_tld || I18n.default_locale
+	end
+	def extract_locale_from_tld
+	  parsed_locale = request.host.split('.').last
+	  I18n.available_locales.map(&:to_s).include?(parsed_locale) ? parsed_locale : nil
+	end
+Use the URL Params: www.example/book?locale=ja
+
+Use support from client: preferred language on browser
+
+Organization of Locale Files:
+|-defaults
+|---es.rb
+|---en.rb
+|-models
+|---book
+|-----es.rb
+|-----en.rb
+|-views
+|---defaults
+|-----es.rb
+|-----en.rb
+|---books
+|-----es.rb
+|-----en.rb
+|---users
+|-----es.rb
+|-----en.rb
+|---navigation
+|-----es.rb
+|-----en.rb
