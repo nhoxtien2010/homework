@@ -1,0 +1,80 @@
+Practice:
+
+build database
+
+ruby 2.1.3p242 (newest version)
+uninstall rails- version:
+- gem uninstall rails -v 4.2.0
+- gem install rails -v 4.1.4
+=================================================================
+POSTGRESQL
+
+rails new myapp --database=postgresql
+
+switch into the Postgres user:
+su - postgres
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: myapp_development
+  pool: 5
+  username: myapp
+  password: password1
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: myapp_test
+  pool: 5
+  username: myapp
+  password: password1
+
+  +++++++++++++++++
+You can then run:
+
+rake db:setup
+
+
+========================================================
+You will not be able to find out the password he chose. However, you may create a new user or set a new password to the existing user.
+
+Usually, you can login as the postgres user:
+
+Open a Terminal and do sudo su postgres. Now, after entering your admin password, you are able to launch psql and do
+
+CREATE USER yourname WITH SUPERUSER PASSWORD 'yourpassword';
+This creates a new admin user. If you want to list the existing users, you could also do
+
+\du
+to list all users and then
+
+ALTER USER yourusername WITH PASSWORD 'yournewpass';
+
+==========================================================
+scafold
+$rails generate scaffold Micropost content:string user_id:integer
+
+==========================================================
+reverse generate:
+rails destroy controller lalala
+rails destroy model yadayada
+rails destroy scaffold hohoho
+
+rails d controller lalala
+rails d model yadayada
+rails d scaffold hohoho
+
+========================================================
+error rake db:
+Your users tables is already created in your database but your schema migration is not updated with latest migration. I dont no why it has not been updated. You need to fix it then you can do it in two ways 1. drop the database and create one more or 2. run the down migration then up migration
+
+rake db:drop
+rake db:create
+rake db:migrate
+======================================================
+model association with saffold:
+
+rails generate model product name
+rails generate model category name
+rails generate model categorisation product:references category:references
